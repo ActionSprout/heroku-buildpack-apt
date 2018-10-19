@@ -56,8 +56,16 @@ fi
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 APT_OPTIONS="$APT_OPTIONS -o dir::etc::sourcelist=$APT_SOURCES"
 
+topic "adding confluent keys"
+wget -qO - http://packages.confluent.io/deb/3.1/archive.key | apt-key add -
+
+
+topic "adding confluent source"
+add-apt-repository "deb [arch=amd64] http://packages.confluent.io/deb/3.1 stable main"
+
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
+
 
 for PACKAGE in $(cat $BUILD_DIR/Aptfile | grep -v -s -e "^:repo:"); do
   if [[ $PACKAGE == *deb ]]; then
