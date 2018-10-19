@@ -47,7 +47,7 @@ else
   mkdir -p "$APT_STATE_DIR/lists/partial"
   mkdir -p "$APT_SOURCELIST_DIR"   # make dir for sources
   mkdir -p "$APT_TRUSTED_DIR"   # make dir for trusted keys
-  cp -vr /etc/apt/trusted.gpg.d/* "$APT_TRUSTED_DIR"
+  cp -f /etc/apt/trusted.gpg.d/* "$APT_TRUSTED_DIR"
   cp -f "$BUILD_DIR/Aptfile" "$APT_CACHE_DIR/Aptfile"
   cat "/etc/apt/sources.list" > "$APT_SOURCES"    # no cp here
   # add custom repositories from Aptfile to sources.list
@@ -55,10 +55,6 @@ else
   topic "Adding custom repositories"
   cat $BUILD_DIR/Aptfile | grep -s -e "^:repo:" | sed 's/^:repo:\(.*\)\s*$/\1/g' >> $APT_SOURCES
 fi
-
-# tmp
-  mkdir -p "$APT_TRUSTED_DIR"   # make dir for trusted keys
-  cp -vr /etc/apt/trusted.gpg.d/* "$APT_TRUSTED_DIR"
 
 APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state=$APT_STATE_DIR"
 APT_OPTIONS="$APT_OPTIONS -o dir::etc::sourcelist=$APT_SOURCES"
