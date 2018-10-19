@@ -57,8 +57,7 @@ APT_OPTIONS="-o debug::nolocking=true -o dir::cache=$APT_CACHE_DIR -o dir::state
 APT_OPTIONS="$APT_OPTIONS -o dir::etc::sourcelist=$APT_SOURCES"
 
 topic "adding confluent keys"
-wget -qO - http://packages.confluent.io/deb/4.0/archive.key | apt-key add -
-
+curl -sS http://packages.confluent.io/deb/4.0/archive.key | gpg --dearmor > /etc/apt/trusted.gpg.d/confluent.gpg
 
 topic "adding confluent source"
 add-apt-repository "deb [arch=amd64] http://packages.confluent.io/deb/4.0 stable main"
