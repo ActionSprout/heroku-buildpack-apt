@@ -61,7 +61,7 @@ APT_OPTIONS="$APT_OPTIONS -o dir::etc::sourcelist=$APT_SOURCES"
 APT_OPTIONS="$APT_OPTIONS -o dir::etc::trustedparts=$APT_TRUSTED_DIR"
 
 topic "adding confluent keys"
-curl -sS http://packages.confluent.io/deb/4.0/archive.key | gpg --dearmor > $APT_TRUSTED_DIR/confluent.gpg
+curl -sS http://packages.confluent.io/deb/4.1/archive.key | gpg --dearmor > $APT_TRUSTED_DIR/confluent.gpg
 
 topic "Updating apt caches"
 apt-get $APT_OPTIONS update | indent
